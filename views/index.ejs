@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Weather App</title>
+        <link rel="stylesheet" href="style.css">
+        <script type="text/javascript" src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+        <script src="https://d3js.org/d3.v5.js"></script>
+        <!-- <script >
+            $(document).ready(function(){
+                //$("button").click(function(){
+                $("form").submit(function(){
+                    // location = "Los Angeles, US";
+                    var location = $('input[name="location"]').val();
+                    var apiKey = 'ab93560c3c304c6be78da42e40565e12';
+                    console.log(location);
+                    $.get(`http://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&&appid=${apiKey}`,function(res){
+                        console.log(res);
+                        var html_str = "";
+                        html_str += `<h2>${res.name}</h2>`;
+                        html_str += `<p>Current temp: ${res.main.temp} F</p>`;
+                        html_str += `<p>Temp Min: ${res.main.temp_min} F</p>`;
+                        html_str += `<p>Temp Max: ${res.main.temp_max} F</p>`;
+                        html_str += `<p>Humidity: ${res.main.humidity} %</p>`;
+                        html_str += `<p>Pressure: ${res.main.pressure} hpa</p><br>`;
+                        $('#results').append(html_str);  
+                        
+                        
+                    }, "json");
+                    $.get(`http://api.openweathermap.org/data/2.5/forecast?q=${location}&units=imperial&&appid=${apiKey}`,function(res){
+                        console.log(res);
+                        // var html_str = "";
+                        // html_str += `<h2>${res.name}</h2>`;
+                        // html_str += `<p>Current temp: ${res.main.temp} F</p>`;
+                        // html_str += `<p>Temp Min: ${res.main.temp_min} F</p>`;
+                        // html_str += `<p>Temp Max: ${res.main.temp_max} F</p>`;
+                        // html_str += `<p>Humidity: ${res.main.humidity} %</p>`;
+                        // html_str += `<p>Pressure: ${res.main.pressure} hpa</p><br>`;
+                        // $('#results').append(html_str);  
+                        var dates = [];
+                        var temps = [];
+                        var d = new Date();
+                        for (var i=0; i<10; i++){
+                            dates.push(d.getDate(res.list[i].dt_txt))
+                        }
+                        for (var i=0; i<5; i++){
+                            temps.push(res.list[i].main.temp)
+                        }
+                        console.log(`dates are: ${dates}`);
+                        console.log(`temps are: ${temps}`);
+                        // var test = res.list[0].dt_txt;
+                        // console.log(`test ${test}`);
+                    }, "json");
+
+                    return false;
+                });
+
+            });
+        
+        </script> -->
+    </head>
+    <body>
+        <div id="container">
+            <div id="findWeather">
+                <h1>My Weather App</h1>
+                <!-- <form>
+                    <input type="text" id="location" name="location" placeholder="Enter location">
+                    <button>Search Weather</button>
+                </form> -->
+                <form action="/api" method="post">
+                    <input type="text" id="location" name="location" placeholder="Enter location">
+                    <!-- <input id="submit" type="submit" value="Submit" name='location' > -->
+                    <p>
+                        <em>
+                                This weather app uses api data from api.openweathermap.org. To get most accurate results, enter the city, country code (e.g. Chicago, US)
+                        </em>
+                    </p>
+
+                    <button>Search Weather</button>
+                </form>
+                <div id="results">
+                    <!-- <p>Results go here</p> -->
+                    <% if (locals.error) { %>
+                        <p>Error: <%=locals.error%></p>
+                      <% } %>
+                    <% if (locals.data) { %>
+                        <p>location: <%=locals.data.name%></p>
+                        <p>temp: <%=locals.data.temp%></p>
+                        <p>temp min: <%=locals.data.min_temp%></p>
+                        <p>temp max: <%=locals.data.max_temp%></p>
+                        <p>humidity: <%=locals.data.humidity%></p>
+                        <p>pressure: <%=locals.data.pressure%></p>
+                      <% } %>
+
+                    <% if (locals.forecast) { %>
+                        <p>dates: <%=locals.forecast.dates%></p>
+                        <p>temps: <%=locals.forecast.temps%></p>
+                    <% } %>
+
+                </div>
+                <div id="chart">
+                    <svg>
+                        <defs> <!-- SVG linear gradients docs: https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Gradients -->
+                            <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
+                                <stop offset="0%" stop-color="purple"/>
+                                <stop offset="100%" stop-color="orange"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+
+    <!-- <%  console.log(`test temp 2: ${locals.forecast.temps[1]}`);  %> -->
+
+    <!-- <script type="javascript" src="bars.js" ></script> -->
+    <script>
+        var height = 500;
+        var width = 800;
+        var margins = {
+            left: 40,
+            top: 40,
+            right: 40,
+            bottom: 40
+        }
+
+        var barData = [
+            {strength:JSON.parse('<%-locals.forecast.temps[0]%>')},
+            {strength:JSON.parse('<%-locals.forecast.temps[1]%>')},
+            {strength:JSON.parse('<%-locals.forecast.temps[2]%>')},
+            {strength:JSON.parse('<%-locals.forecast.temps[3]%>')},
+            {strength:JSON.parse('<%-locals.forecast.temps[4]%>')},
+            {strength:JSON.parse('<%-locals.forecast.temps[5]%>')},
+            {strength:JSON.parse('<%-locals.forecast.temps[6]%>')},
+            {strength:JSON.parse('<%-locals.forecast.temps[7]%>')},
+            {strength:JSON.parse('<%-locals.forecast.temps[8]%>')},
+            {strength:JSON.parse('<%-locals.forecast.temps[9]%>')},
+        ]
+
+        // var testtemp = JSON.parse('<%-locals.forecast.temps[2]%>')
+        // console.log(`test temp 3 (in script): ${testtemp}`);  
+
+
+        // var barData2 = [
+        //     {strength:13},
+        //     {strength:5},
+        //     {strength:22},
+        //     {strength:16},
+        //     {strength:40},
+        //     {strength:49},
+        //     {strength:27},
+        //     {strength:28},
+        //     {strength:34},
+        //     {strength:19},
+        //     {strength:39},
+        //     {strength:35}
+        // ]
+
+        var svg = d3.select("svg")
+                    .attr("width", width)
+                    .attr("height", height);
+
+        var xscale = d3.scaleLinear()
+                    .domain([0,barData.length])
+                    .range([0,width-margins.left-margins.right])
+
+        var yscale = d3.scaleLinear()
+                    .domain([0,50])
+                    .range([(height-margins.bottom),margins.top])
+
+        var xaxis = d3.axisBottom(xscale)
+                    .ticks(barData.length)
+                    // .text(function(){return 'hello'})
+
+        var yaxis = d3.axisLeft(yscale)
+                    .ticks(barData.length)
+
+        var barWidth = Math.floor((width-margins.left-margins.right)/barData.length);
+
+        svg.append("g")
+            .attr("transform", "translate("+margins.left+","+(height-margins.bottom)+")")
+            .call(xaxis)
+
+        svg.append("g")
+            .attr("transform", "translate("+margins.left+",0)")
+            .call(yaxis)
+
+        svg.selectAll("rect")
+            //retrieve data from data source (ie. barData)
+            .data(barData)
+            //apply data and append to rectangles
+            .enter().append("rect")
+            // .attr("height", function(d){ return Math.floor(height-margins.bottom-yscale(d.strength)); })
+            //grows top down; takes full height substracts bottom margin and subtracts starting point.
+            // .attr("height", function(d){ return height-margins.bottom-yscale(d.strength); })
+            .attr("height", function(d){ return height-margins.top-yscale(d.strength); })
+            //even bar width
+            .attr("width", barWidth)
+            //starting x-coordinate
+            .attr("x", function(d,i){ return xscale(i); })
+            //starting y-coordinate
+            .attr("y", function(d){ return yscale(d.strength); })
+            // .attr("y", function(d){ return yscale(50); })
+            .attr("transform", function(d){ return "translate("+(margins.left+barWidth/2)+",0)"; })
+
+
+        //set timeout pulls data from second source and uses timeout and transition to change bars
+        // setTimeout(function(){
+        //     svg.selectAll("rect")
+        //         .data(barData2)
+        //         .transition()
+        //         .duration(2000)
+        //         .attr("height", function(d){ return Math.floor(height-margins.bottom-yscale(d.strength)); })
+        //         .attr("width", barWidth)
+        //         .attr("x", function(d,i){ return xscale(i); })
+        //         .attr("y", function(d){ return yscale(d.strength); })
+        //         .attr("transform", function(d){ return "translate("+(margins.left+barWidth/2)+",0)"; })     
+        // }, 5000)                
+
+    </script>
+</html>
