@@ -37,7 +37,7 @@
                         <p>temp: <%=locals.data.temp%></p>
                         <p>temp min: <%=locals.data.min_temp%></p>
                         <p>temp max: <%=locals.data.max_temp%></p>
-                        <p>humidity: <%=locals.data.humidity%></p>
+                        <p>humidity: <%=locals.data.humidity%>%</p>
                         <p>pressure: <%=locals.data.pressure%></p>
                       <% } %>
 
@@ -123,7 +123,7 @@
                 .range([0,width-margins.left-margins.right])
                 
                 var yscale = d3.scaleLinear()
-                .domain([0,50])
+                .domain([0,100])
                 .range([(height-margins.bottom),margins.top])
                 
                 var xaxis = d3.axisBottom(xscale)

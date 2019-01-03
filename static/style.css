@@ -9,6 +9,7 @@
     --primary: #1b4d86;
 }
 
+
 #container {
     /* outline: 1px dotted blue; */
     width: 1000px;
@@ -19,7 +20,7 @@
 
 #findWeather {
     /* outline: 1px dotted green; */
-    border: 2px solid var(--primary);
+    /* border: 2px solid var(--primary); */
     width: 100%;
     /* height: 600px; */
     margin: 20px auto;
@@ -49,7 +50,7 @@ h1 {
 button {
 
     /* margin-left: 65px; */
-    margin: 0 auto;
+    margin: 10px auto;
     width: 500px;
     height: 50px;
     /* border: 1px solid var(--primary); */
@@ -71,10 +72,12 @@ button {
 
 
 svg {
-    border: 3px solid black;
+    /* border: 3px solid black; */
+    margin-left: 20px;
 }
 svg rect {
-    fill: url(#gradient);
+    /* fill: url(#gradient); */
+    fill: teal;
     stroke: black;
-    stroke-width: 1;
+    stroke-width: 2;
 }
