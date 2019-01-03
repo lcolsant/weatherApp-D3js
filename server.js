@@ -1,21 +1,8 @@
 
 
 var express = require("express");
-// var d3 = require('d3');
-// const jsdom = require('jsdom')
-// const { JSDOM } = jsdom;
 
-// var document = jsdom.jsdom();
-// svg = d3.select(document.body).append('hello world');
-// d3.select(document.body).append('hello world');
-
-
-
-// var request = require('request');
 let port = 8000;
-// var api_data;
-// var api_forecast;
-
 
 var app = express();
 

@@ -42,8 +42,8 @@
                       <% } %>
 
                     <% if (locals.forecast) { %>
-                        <p>dates: <%=locals.forecast.dates%></p>
-                        <p>temps: <%=locals.forecast.temps%></p>
+                        <!-- <p>dates: <%#=locals.forecast.dates%></p> -->
+                        <!-- <p>temps: <%#=locals.forecast.temps%></p> -->
                         <%# capture data from server into new variable to pass to script %>
                         <% var forecast_data = locals.forecast.temps  %>
                         <% var dates_data = locals.forecast.dates  %>
