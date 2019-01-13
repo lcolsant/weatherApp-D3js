@@ -76,8 +76,7 @@ svg {
     margin-left: 20px;
 }
 svg rect {
-    /* fill: url(#gradient); */
-    fill: teal;
+    fill: url(#gradient);
     stroke: black;
     stroke-width: 2;
 }

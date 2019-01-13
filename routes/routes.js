@@ -74,10 +74,7 @@ module.exports = function Route(app){
                 
                 var dates = [];
                 var temps = [];
-                // var d = new Date();
-                // for (var i=0; i<10; i++){
-                //     dates.push(d.getDate(body2.list[i].dt_txt))
-                // }
+        
                 for (var i=0; i<10; i++){
                     dates.push(body2.list[i].dt_txt)
                 }
@@ -93,8 +90,6 @@ module.exports = function Route(app){
                 }
 
                 res.render('index', {data:api_data, forecast:api_forecast});
-                
-                // res.render('index', {data:api_data, myname:myname});
 
                 });
 

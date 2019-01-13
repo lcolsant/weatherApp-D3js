@@ -55,9 +55,9 @@
                     <svg>
                         <defs> <!-- SVG linear gradients docs: https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Gradients -->
                             <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
-                                <stop offset="0%" stop-color="purple"/>
-                                <stop offset="100%" stop-color="orange"/>
-                            </linearGradient>
+                                <stop offset="0%" stop-color="orange"/>
+                                <stop offset="100%" stop-color="purple"/>
+                            </linearGradient>   
                         </defs>
                     </svg>
                 </div>
@@ -98,46 +98,86 @@
             }
 
 
-                
                 var barData = [
-                    {strength:get_forecast_data[0]},
-                    {strength:get_forecast_data[1]},
-                    {strength:get_forecast_data[2]},
-                    {strength:get_forecast_data[3]},
-                    {strength:get_forecast_data[4]},
-                    {strength:get_forecast_data[5]},
-                    {strength:get_forecast_data[6]},
-                    {strength:get_forecast_data[7]},
-                    {strength:get_forecast_data[8]},
-                    {strength:get_forecast_data[9]},
+                    {
+                        strength:get_forecast_data[0],
+                        date:get_dates_data[0]
+                    },
+                    {
+                        strength:get_forecast_data[1],
+                        date:get_dates_data[1]
+                    },
+                    {
+                        strength:get_forecast_data[2],
+                        date:get_dates_data[2]
+                    },
+                    {
+                        strength:get_forecast_data[3],
+                        date:get_dates_data[3]
+                    },
+                    {
+                        strength:get_forecast_data[4],
+                        date:get_dates_data[4]
+                    },
+                    {
+                        strength:get_forecast_data[5],
+                        date:get_dates_data[5]
+                    },
+                    {
+                        strength:get_forecast_data[6],
+                        date:get_dates_data[6]
+                    },
+                    {
+                        strength:get_forecast_data[7],
+                        date:get_dates_data[7]
+                    },
+                    {
+                        strength:get_forecast_data[8],
+                        date:get_dates_data[8]
+                    },
+                    {
+                        strength:get_forecast_data[9],
+                        date:get_dates_data[9]
+                    },
                 ]
-   
+
                 
-                
+
                 var svg = d3.select("svg")
                 .attr("width", width)
                 .attr("height", height);
                 
-                var xscale = d3.scaleLinear()
-                .domain([0,barData.length])
-                .range([0,width-margins.left-margins.right])
+                // var xscale = d3.scaleLinear()
+                // .domain([0,barData.length])
+                // .range([0,width-margins.left-margins.right]);
+
+                var xscale = d3.scaleTime()
+                    .domain(d3.extent(barData, function(d){ return new Date(d.date); }))
+                    .nice()
+                    .range([0,width-margins.left-margins.right-30] )
+
                 
                 var yscale = d3.scaleLinear()
-                .domain([0,100])
-                .range([(height-margins.bottom),margins.top])
-                
+                    .domain(d3.extent(barData, function(d){ return d.strength; }))
+                    .nice()
+                    .range([(height-margins.bottom),margins.top])
+
+                            
                 var xaxis = d3.axisBottom(xscale)
-                .ticks(barData.length)
-                // .text(function(){return 'hello'})
+                // .ticks(get_dates_data.length)
                 
                 var yaxis = d3.axisLeft(yscale)
-                .ticks(barData.length)
+                // .ticks(barData.length)
                 
                 var barWidth = Math.floor((width-margins.left-margins.right)/barData.length);
                 
                 svg.append("g")
                 .attr("transform", "translate("+margins.left+","+(height-margins.bottom)+")")
                 .call(xaxis)
+                .selectAll("text")
+                .attr("transform", "rotate(45)")
+                .style("text-anchor", "start");
+
                 
                 svg.append("g")
                 .attr("transform", "translate("+margins.left+",0)")
@@ -148,18 +188,23 @@
                 .data(barData)
                 //apply data and append to rectangles
                 .enter().append("rect")
-                // .attr("height", function(d){ return Math.floor(height-margins.bottom-yscale(d.strength)); })
                 //grows top down; takes full height substracts bottom margin and subtracts starting point.
-                // .attr("height", function(d){ return height-margins.bottom-yscale(d.strength); })
                 .attr("height", function(d){ return height-margins.top-yscale(d.strength); })
                 //even bar width
                 .attr("width", barWidth)
                 //starting x-coordinate
-                .attr("x", function(d,i){ return xscale(i); })
+                // .attr("x", function(d,i){ return xscale(i); })
+                .attr("x", function(d){ return xscale(new Date(d.date)); })
                 //starting y-coordinate
                 .attr("y", function(d){ return yscale(d.strength); })
-                // .attr("y", function(d){ return yscale(50); })
-                .attr("transform", function(d){ return "translate("+(margins.left+barWidth/2)+",0)"; })
+                // .attr("transform", function(d){ return "translate("+(margins.left+barWidth/2)+",0)"; })
+                .on("mouseover", function(d){
+                    d3.select(this).style("opacity", "0.85");
+                })
+                .on("mouseout", function(d){
+                    d3.select(this).style("opacity", "1.0");
+                })
+                .attr("transform", function(d){ return "translate("+(margins.left)+",0)"; })
                 
             }else{
                 console.log('there is no forecast data available!')
