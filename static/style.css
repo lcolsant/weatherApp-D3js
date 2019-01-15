@@ -27,6 +27,7 @@
 
 }
 
+
 h1 {
     color: var(--primary);
     text-align: center;
@@ -74,6 +75,8 @@ button {
 svg {
     /* border: 3px solid black; */
     margin-left: 20px;
+    padding-bottom: 40px;
+    /* padding: 20px; */
 }
 svg rect {
     fill: url(#gradient);

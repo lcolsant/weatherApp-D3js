@@ -143,6 +143,9 @@
 
                 
 
+                // time = d3.timeFormat("%m/%d/%Y %H:%M:%S %p");
+                // console.log(time(new Date(get_dates_data[0])));
+
                 var svg = d3.select("svg")
                 .attr("width", width)
                 .attr("height", height);
@@ -150,7 +153,8 @@
                 // var xscale = d3.scaleLinear()
                 // .domain([0,barData.length])
                 // .range([0,width-margins.left-margins.right]);
-
+        
+                
                 var xscale = d3.scaleTime()
                     .domain(d3.extent(barData, function(d){ return new Date(d.date); }))
                     .nice()
@@ -164,6 +168,7 @@
 
                             
                 var xaxis = d3.axisBottom(xscale)
+                    .tickFormat(d3.timeFormat("%m/%d - %I:%M %p"))
                 // .ticks(get_dates_data.length)
                 
                 var yaxis = d3.axisLeft(yscale)
@@ -176,12 +181,16 @@
                 .call(xaxis)
                 .selectAll("text")
                 .attr("transform", "rotate(45)")
-                .style("text-anchor", "start");
+                .style("text-anchor", "start")
+                .style("font", "12px Arial")
+                .style("font-weight", "Bold")
 
                 
                 svg.append("g")
                 .attr("transform", "translate("+margins.left+",0)")
                 .call(yaxis)
+                .style("font", "12px Arial")
+                .style("font-weight", "Bold")
                 
                 svg.selectAll("rect")
                 //retrieve data from data source (ie. barData)
