@@ -91,7 +91,7 @@
             var height = 500;
             var width = 800;
             var margins = {
-                left: 40,
+                left: 60,
                 top: 40,
                 right: 40,
                 bottom: 40
@@ -143,17 +143,10 @@
 
                 
 
-                // time = d3.timeFormat("%m/%d/%Y %H:%M:%S %p");
-                // console.log(time(new Date(get_dates_data[0])));
-
                 var svg = d3.select("svg")
                 .attr("width", width)
                 .attr("height", height);
                 
-                // var xscale = d3.scaleLinear()
-                // .domain([0,barData.length])
-                // .range([0,width-margins.left-margins.right]);
-        
                 
                 var xscale = d3.scaleTime()
                     .domain(d3.extent(barData, function(d){ return new Date(d.date); }))
@@ -176,14 +169,21 @@
                 
                 var barWidth = Math.floor((width-margins.left-margins.right)/barData.length);
                 
+                //group and add x axis
                 svg.append("g")
                 .attr("transform", "translate("+margins.left+","+(height-margins.bottom)+")")
                 .call(xaxis)
                 .selectAll("text")
-                .attr("transform", "rotate(45)")
+                .attr("transform", "rotate(25)")
                 .style("text-anchor", "start")
                 .style("font", "12px Arial")
                 .style("font-weight", "Bold")
+
+                //add titles to x axis
+                svg.append("text")
+                .attr("text-anchor", "middle")
+                .attr("transform", "translate("+(width+margins.left+margins.right)/2+","+(height+margins.bottom)+")")
+                .text("Date - Time")
 
                 
                 svg.append("g")
@@ -191,6 +191,13 @@
                 .call(yaxis)
                 .style("font", "12px Arial")
                 .style("font-weight", "Bold")
+
+
+                //add titles to y axis
+                svg.append("text")
+                .attr("text-anchor", "middle")
+                .attr("transform", "translate("+((margins.left/2)-10)+","+(height/2)+")rotate(-90)")
+                .text("Temperature (F)")
                 
                 svg.selectAll("rect")
                 //retrieve data from data source (ie. barData)
