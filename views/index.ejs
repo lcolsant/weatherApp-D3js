@@ -3,76 +3,89 @@
     <head>
         <meta charset="UTF-8">
         <title>Weather App</title>
+        <link href="bootstrap.min.css" rel="stylesheet" media="screen">
         <link rel="stylesheet" href="style.css">
         <script type="text/javascript" src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
         <script src="https://d3js.org/d3.v5.js"></script>
   
     </head>
     <body>
-        <div id="container">
+        <div class="container-fluid">
             <div id="findWeather">
                 <h1>My Weather App</h1>
-                <!-- <form>
-                    <input type="text" id="location" name="location" placeholder="Enter location">
-                    <button>Search Weather</button>
-                </form> -->
-                <form action="/api" method="post">
-                    <input type="text" id="location" name="location" placeholder="Enter location">
-                    <!-- <input id="submit" type="submit" value="Submit" name='location' > -->
-                    <p>
-                        <em>
-                                This weather app uses api data from api.openweathermap.org. To get most accurate results, enter the city, country code (e.g. Chicago, US)
-                        </em>
-                    </p>
 
-                    <button>Search Weather</button>
-                </form>
-                <div id="results">
-                    <!-- <p>Results go here</p> -->
-                    <% if (locals.error) { %>
-                        <p>Error: <%=locals.error%></p>
-                      <% } %>
-                    <% if (locals.data) { %>
-                        <p>location: <%=locals.data.name%></p>
-                        <p>temp: <%=locals.data.temp%></p>
-                        <p>temp min: <%=locals.data.min_temp%></p>
-                        <p>temp max: <%=locals.data.max_temp%></p>
-                        <p>humidity: <%=locals.data.humidity%>%</p>
-                        <p>pressure: <%=locals.data.pressure%></p>
-                      <% } %>
-
-                    <% if (locals.forecast) { %>
-                        <!-- <p>dates: <%#=locals.forecast.dates%></p> -->
-                        <!-- <p>temps: <%#=locals.forecast.temps%></p> -->
-                        <%# capture data from server into new variable to pass to script %>
-                        <% var forecast_data = locals.forecast.temps  %>
-                        <% var dates_data = locals.forecast.dates  %>
-                    <% } %>
-
+                <div class="row-fluid">
+                    <div class="span12">
+                        <form action="/api" method="post">
+                            <input type="text" id="location" name="location" placeholder="Enter location">
+                            <p>
+                                <em>
+                                        This weather app uses api data from api.openweathermap.org. To get most accurate results, enter the city, country code (e.g. Chicago, US)
+                                </em>
+                            </p>
+                            <button>Search Weather</button>
+                        </form>
+                    </div>
                 </div>
-                <% if (locals.forecast) { %>    
-                <div id="chart">
-                    <svg>
-                        <defs> <!-- SVG linear gradients docs: https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Gradients -->
-                            <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
-                                <stop offset="0%" stop-color="orange"/>
-                                <stop offset="100%" stop-color="purple"/>
-                            </linearGradient>   
-                        </defs>
-                    </svg>
-                </div>
-                <% } %>
-            </div>
-        </div>
+
+
+                <div class="row-fluid">
+                    <div class="span12 well">
+                        <div id="results">
+                            <!-- <p>Results go here</p> -->
+                            <% if (locals.error) { %>
+                                <p>Error: <%=locals.error%></p>
+                              <% } %>
+                            <% if (locals.data) { %>
+                                <p>location: <%=locals.data.name%></p>
+                                <p>temp: <%=locals.data.temp%></p>
+                                <p>temp min: <%=locals.data.min_temp%></p>
+                                <p>temp max: <%=locals.data.max_temp%></p>
+                                <p>humidity: <%=locals.data.humidity%>%</p>
+                                <p>pressure: <%=locals.data.pressure%></p>
+                              <% } %>
         
+                            <% if (locals.forecast) { %>
+                                <!-- <p>dates: <%#=locals.forecast.dates%></p> -->
+                                <!-- <p>temps: <%#=locals.forecast.temps%></p> -->
+                                <%# capture data from server into new variable to pass to script %>
+                                <% var forecast_data = locals.forecast.temps  %>
+                                <% var dates_data = locals.forecast.dates  %>
+                            <% } %>
+        
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row-fluid">
+                    <div class="span12">
+                        <% if (locals.forecast) { %>    
+                        <div id="chart">
+                            <svg>
+                                <defs> <!-- SVG linear gradients docs: https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Gradients -->
+                                    <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
+                                        <stop offset="0%" stop-color="orange"/>
+                                        <stop offset="100%" stop-color="purple"/>
+                                    </linearGradient>   
+                                </defs>
+                            </svg>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <script src="js/bootstrap.min.js"></script>
     </body>
 
 
-    <!-- <script type="javascript" src="bars.js" ></script> -->
     <script>
 
         //check to see of there is forecast data before running script
-
         //pull in forecast temp data variable into new script variable and parse string into array data
         var get_forecast_data = '<%= forecast_data %>';
         var get_forecast_data = get_forecast_data.split(",");
