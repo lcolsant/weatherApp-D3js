@@ -12,10 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "d3": "^5.7.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "jsdom": "^13.1.0",
     "request": "^2.88.0"
+  },
+  "engines": {
+    "node": "8.11.4"
   }
 }

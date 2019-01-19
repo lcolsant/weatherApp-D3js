@@ -1,0 +1,5 @@
+{
+    "name": "weatherApp-D3",
+    "description": "Weather app using api data from api.openweathermap.org and D3.js bar charts showing short term forecast",
+    "repository": "https://github.com/lcolsant/weatherApp-D3js"
+}

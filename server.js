@@ -2,7 +2,8 @@
 
 var express = require("express");
 
-let port = 8000;
+const port = process.env.PORT || 8000;
+
 
 var app = express();
 
