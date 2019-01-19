@@ -10,23 +10,13 @@
 }
 
 
-/* #container {
-    width: 1000px;
-    margin: 20px auto;
-
-} */
-
-#findWeather {
-    /* outline: 1px dotted green; */
-    /* border: 2px solid var(--primary); */
-    width: 100%;
-    /* height: 600px; */
-    margin: 20px auto;
-
+h1 {
+    color: var(--primary);
+    text-align: center;
+    padding: 10px;
 }
 
-
-h1 {
+h4 {
     color: var(--primary);
     text-align: center;
     padding: 10px;
@@ -46,34 +36,36 @@ h1 {
 
 }
 
-button {
+#header {
+    text-align: center;
+    color: var(--primary);
 
-    /* margin-left: 65px; */
+}
+
+
+.searchBtn {
+
     margin: 10px auto;
-    width: 500px;
-    height: 50px;
-    /* border: 1px solid var(--primary); */
+    padding: 10px;
     background-color: var(--primary);
     color: #ffffff;
-    border-radius: 10px;
-    font-size: 20px;
+    font-size: 15px;
     display: block;
 
 }
 
-#results {
-    /* outline: 1px dotted red; */
-    /* height: 300px; */
-    width: 560px;
-    margin-top: 20px;
-    padding: 20px;
+.results{
+    color: var(--primary);
+    
 }
+
 
 
 svg {
     /* border: 3px solid black; */
-    margin-left: 20px;
+    margin: 0 auto;
     padding-bottom: 40px;
+    display: block;
     /* padding: 20px; */
 }
 svg rect {
